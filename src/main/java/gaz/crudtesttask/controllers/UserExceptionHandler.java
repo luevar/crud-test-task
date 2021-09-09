@@ -2,6 +2,7 @@ package gaz.crudtesttask.controllers;
 
 import gaz.crudtesttask.exceptions.FieldNotPresentException;
 import gaz.crudtesttask.exceptions.UserNotFoundException;
+import gaz.crudtesttask.exceptions.WrongFieldFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Controller handling application exceptions
  */
 @ControllerAdvice
-public class UserNotFoundAdvice {
+public class UserExceptionHandler {
     /**
      * Handles the case of a call to a non-existent user
      *
@@ -37,6 +38,19 @@ public class UserNotFoundAdvice {
     @ExceptionHandler(FieldNotPresentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     String fieldNotPresentHandler(FieldNotPresentException ex) {
+        return ex.getMessage();
+    }
+
+    /**
+     * Handles the case of creating a new user with information in the wrong format
+     *
+     * @param ex RuntimeException subclass that marks that one of the fields of new user is in an invalid format
+     * @return String with error message to the client
+     */
+    @ResponseBody
+    @ExceptionHandler(WrongFieldFormatException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String wrongFieldFormatHandler(WrongFieldFormatException ex) {
         return ex.getMessage();
     }
 }
