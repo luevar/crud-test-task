@@ -8,10 +8,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration class that loads multiple entities into the database at startup
+ */
 @Configuration
 public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
+    /**
+     * Spring Boot will run this bean once app context is loaded, then it will fill our database with entities using the UserRepository interface
+     *
+     * @param repository the JpaRepository subclass that we use to fill our database
+     * @return CommandLineRunner bean
+     */
     @Bean
     CommandLineRunner initDatabase(UserRepository repository) {
         return args -> {
