@@ -1,5 +1,6 @@
 package gaz.crudtesttask.controllers;
 
+import gaz.crudtesttask.exceptions.FieldNotPresentException;
 import gaz.crudtesttask.models.User;
 import gaz.crudtesttask.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class UserController {
      */
     @PostMapping("/create")
     public Long createUser(@RequestBody User user) {
+        if (user.getName() == null || user.getPhoneNumber() == null) {
+            throw new FieldNotPresentException();
+        }
         return userService.createUser(user);
     }
 
