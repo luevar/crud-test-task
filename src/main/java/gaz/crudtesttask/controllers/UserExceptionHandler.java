@@ -2,7 +2,7 @@ package gaz.crudtesttask.controllers;
 
 import gaz.crudtesttask.exceptions.FieldNotPresentException;
 import gaz.crudtesttask.exceptions.UserNotFoundException;
-import gaz.crudtesttask.exceptions.WrongFieldFormatException;
+import gaz.crudtesttask.exceptions.InvalidFieldFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,9 +48,9 @@ public class UserExceptionHandler {
      * @return String with error message to the client
      */
     @ResponseBody
-    @ExceptionHandler(WrongFieldFormatException.class)
+    @ExceptionHandler(InvalidFieldFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String wrongFieldFormatHandler(WrongFieldFormatException ex) {
+    String wrongFieldFormatHandler(InvalidFieldFormatException ex) {
         return ex.getMessage();
     }
 }

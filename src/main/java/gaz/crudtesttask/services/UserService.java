@@ -1,7 +1,7 @@
 package gaz.crudtesttask.services;
 
 import gaz.crudtesttask.exceptions.UserNotFoundException;
-import gaz.crudtesttask.exceptions.WrongFieldFormatException;
+import gaz.crudtesttask.exceptions.InvalidFieldFormatException;
 import gaz.crudtesttask.models.User;
 import gaz.crudtesttask.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class UserService implements UserServiceInterface {
         Pattern phoneNumberPattern = Pattern.compile("^\\+?\\d{11}$");
         if (!namePattern.matcher(user.getName()).matches()
                 || !phoneNumberPattern.matcher(user.getPhoneNumber()).matches()) {
-            throw new WrongFieldFormatException();
+            throw new InvalidFieldFormatException();
         }
         return userRepository.save(user).getId();
     }

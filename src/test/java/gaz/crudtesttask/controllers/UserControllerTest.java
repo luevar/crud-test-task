@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserControllerTest {
@@ -23,8 +22,21 @@ class UserControllerTest {
     }
 
     @Test
-    void fieldNotPresentTest() {
-        User user = new User(null, null);
+    void nameFieldNotPresentTest() {
+        User user = new User(null, "+79139526213");
         assertThrows(FieldNotPresentException.class, () -> userController.createUser(user));
+    }
+
+    @Test
+    void phoneNumberFieldNotPresentTest() {
+        User user = new User("Alexander Miller", null);
+        assertThrows(FieldNotPresentException.class, () -> userController.createUser(user));
+    }
+
+    @Test
+    void everythingIsPresentTest() {
+        User user = new User("Alexander Miller", "+79139526213");
+        doReturn(1L).when(userService).createUser(user);
+        assertDoesNotThrow(() -> userController.createUser(user));
     }
 }
